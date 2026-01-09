@@ -11,6 +11,7 @@ namespace _01_Hosting
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<App>();
+                    services.AddSingleton<IGreetingService, GreetingService>();
                 })
                 .Build();
             
@@ -18,8 +19,8 @@ namespace _01_Hosting
 
             var app = host.Services.GetRequiredService<App>();
             await app.RunAsync();
-            
-            await host.StopAsync();   
+
+            await host.StopAsync();
         }
     }
 }

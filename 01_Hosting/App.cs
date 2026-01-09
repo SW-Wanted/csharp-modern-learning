@@ -2,13 +2,15 @@
 {
     public class App
     {
+        private readonly IGreetingService _greetingService;
+
+        public App(IGreetingService greetingService)
+        {
+            _greetingService = greetingService;
+        }
         public async Task RunAsync()
         {
-            Console.WriteLine("App está a executar...");
-
-            await Task.Delay(1000);
-
-            Console.WriteLine("App terminou.");
+            await _greetingService.GreetAsync("Emanuel dos Santos");
         }
     }
 }

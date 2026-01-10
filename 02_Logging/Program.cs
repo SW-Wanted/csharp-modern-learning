@@ -10,16 +10,30 @@ namespace _02_Logging
         static async Task Main(string[] args)
         {
             using IHost host = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(logging =>
+                .ConfigureLogging((context, logging)=>
                 {
                     logging.ClearProviders();
-                    logging.AddSimpleConsole(options =>
+
+                    if (context.HostingEnvironment.IsDevelopment())
                     {
-                        options.IncludeScopes = true;
-                        options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
-                        // options.SingleLine = true;
-                    });
-                    logging.SetMinimumLevel(LogLevel.Trace);
+                        logging.AddSimpleConsole(options =>
+                        {
+                            options.IncludeScopes = true;
+                            options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+                            options.SingleLine = false;
+                        });
+                        logging.SetMinimumLevel(LogLevel.Trace);
+                    }
+                    else
+                    {
+                        logging.AddSimpleConsole(options => options.IncludeScopes = false);
+                        logging.AddJsonConsole(options => options.IncludeScopes = true);
+                        logging.SetMinimumLevel(LogLevel.Information);
+                    }
+
+                    logging.AddFilter("Microsoft", LogLevel.Warning);
+                    logging.AddFilter("System", LogLevel.Warning);
+                    logging.AddFilter("Default", LogLevel.Information);
                 })
                 .ConfigureServices(services =>
                 {

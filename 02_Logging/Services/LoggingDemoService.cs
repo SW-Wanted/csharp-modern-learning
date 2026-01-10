@@ -12,6 +12,25 @@ namespace _02_Logging.Services
         {
             _logger = logger;
         }
+
+        private void SimulateFailure()
+        {
+            throw new InvalidOperationException("Estádo inválido dectetado", new ArgumentNullException("dependecy"));
+        }
+
+        public void RunWithException()
+        {
+            try
+            {
+                _logger.LogInformation("Iniciando operação perigosa.");
+
+                SimulateFailure();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Falha ao executar a operação em {Service}", nameof(LoggingDemoService));
+            }
+        }
         public async Task RullAllExamplesAsync()
         {
             _logger.LogTrace("Log TRACE: detalhes extremos");

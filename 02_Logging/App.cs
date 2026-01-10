@@ -19,7 +19,7 @@ namespace _02_Logging
         {
             _logger.LogInformation("Logging Lab Starts");
 
-            await _demo.RullAllExamplesAsync();
+            _demo.RunWithException();
 
             _logger.LogInformation("Logging Lab Finalizado");
         }

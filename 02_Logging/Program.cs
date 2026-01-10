@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace _02_Logging
 {
@@ -9,32 +10,15 @@ namespace _02_Logging
     {
         static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .WriteTo.File("logs/myapp.log", rollingInterval: RollingInterval.Day)
+               .CreateLogger();
+
             using IHost host = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((context, logging)=>
-                {
-                    logging.ClearProviders();
-
-                    if (context.HostingEnvironment.IsDevelopment())
-                    {
-                        logging.AddSimpleConsole(options =>
-                        {
-                            options.IncludeScopes = true;
-                            options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
-                            options.SingleLine = false;
-                        });
-                        logging.SetMinimumLevel(LogLevel.Trace);
-                    }
-                    else
-                    {
-                        logging.AddSimpleConsole(options => options.IncludeScopes = false);
-                        logging.AddJsonConsole(options => options.IncludeScopes = true);
-                        logging.SetMinimumLevel(LogLevel.Information);
-                    }
-
-                    logging.AddFilter("Microsoft", LogLevel.Warning);
-                    logging.AddFilter("System", LogLevel.Warning);
-                    logging.AddFilter("Default", LogLevel.Information);
-                })
+                .UseSerilog()
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<App>();

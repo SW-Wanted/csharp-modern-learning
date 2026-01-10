@@ -17,11 +17,7 @@ namespace _02_Logging
         }
         public async Task RunAsync()
         {
-            _logger.LogInformation("Logging Lab Starts");
-
-            _demo.RunWithException();
-
-            _logger.LogInformation("Logging Lab Finalizado");
+            await _demo.GreetingAsync("Emanuel dos Santos");
         }
     }
 }

@@ -13,7 +13,12 @@ namespace _02_Logging
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddConsole();
+                    logging.AddSimpleConsole(options =>
+                    {
+                        options.IncludeScopes = true;
+                        options.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+                        // options.SingleLine = true;
+                    });
                     logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .ConfigureServices(services =>

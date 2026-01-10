@@ -18,6 +18,29 @@ namespace _02_Logging.Services
             throw new InvalidOperationException("Estádo inválido dectetado", new ArgumentNullException("dependecy"));
         }
 
+        public async Task GreetingAsync(string name)
+        {
+            using (_logger.BeginScope("User: [{UserName}]", name))
+            {
+                _logger.LogInformation("Inicio da Saudacao");
+
+                await Task.Delay(500);
+
+                _logger.LogInformation("Fim da Saudacao");
+
+            }
+
+            _logger.LogInformation("Iniciando operação sem nome de usuário no escopo.");
+            await Task.Delay(500);
+            _logger.LogInformation("Finalizando operação sem nome de usuário no escopo.");
+
+            using (_logger.BeginScope(new { CorrelationId = Guid.NewGuid(), Name = name}))
+            {
+                _logger.LogInformation("Iniciando operação com múltiplos valores no escopo.");
+                await Task.Delay(500);
+                _logger.LogInformation("Finalizando operação com múltiplos valores no escopo.");
+            }
+        }
         public void RunWithException()
         {
             try
@@ -26,7 +49,7 @@ namespace _02_Logging.Services
 
                 SimulateFailure();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Falha ao executar a operação em {Service}", nameof(LoggingDemoService));
             }

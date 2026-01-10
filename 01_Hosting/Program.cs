@@ -12,11 +12,12 @@ namespace _01_Hosting
                 {
                     services.AddSingleton<App>();
                     services.AddSingleton<IGreetingService, GreetingService>();
+                    services.AddTransient<IOperationId, OperationId>();
                 })
                 .Build();
             
             await host.StartAsync();
-
+            using var scope = host.Services.CreateScope(); // To use services.addScoped<>(); | Only for non-web apps
             var app = host.Services.GetRequiredService<App>();
             await app.RunAsync();
 

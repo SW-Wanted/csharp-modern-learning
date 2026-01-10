@@ -6,6 +6,6 @@ namespace _01_Hosting
 {
     public interface IGreetingService
     {
-        Task GreetAsync(string name);
+        Task GreetAsync(GreetingRequest request);
     }
 }

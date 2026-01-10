@@ -14,11 +14,13 @@ namespace _01_Hosting
             _logger = logger;
             _operationId = operationId;
         }
-        public async Task GreetAsync(string name)
+        public async Task GreetAsync(GreetingRequest request)
         {
-            _logger.LogInformation("OperationId: {Id} | Saudando: {Name}", _operationId.Id, name);
+            _logger.LogInformation("OperationId: {Id} | Saudando: {Name}", _operationId.Id, request.Name);
 
-            await Task.Delay(300);
+            await Task.Delay(500);
+
+            _logger.LogInformation("Olá, {Name}", request.Name);
         }
     }
 }

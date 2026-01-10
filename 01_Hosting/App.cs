@@ -16,8 +16,9 @@ namespace _01_Hosting
         {
             _logger.LogInformation("Aplicação Iniciada.");
 
-            await _greetingService.GreetAsync("Emanuel dos Santos");
-            await _greetingService.GreetAsync("Micaela dos Santos");
+            var request = new GreetingRequest("Emanuel dos Santos");
+
+            await _greetingService.GreetAsync(request);
 
             _logger.LogInformation("Aplicação Finalizada.");
         }

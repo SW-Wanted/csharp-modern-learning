@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="00_LegacyStyle/00_LegacyStyle.csproj" Id="e12e9d62-6185-4285-9b69-3d47340ebf65" />
   <Project Path="01_Hosting/01_Hosting.csproj" Id="93ae9100-02d7-4317-a6b8-20d26d6d3f78" />
 </Solution>

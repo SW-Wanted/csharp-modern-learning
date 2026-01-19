@@ -2,4 +2,5 @@
   <Project Path="00_LegacyStyle/00_LegacyStyle.csproj" Id="e12e9d62-6185-4285-9b69-3d47340ebf65" />
   <Project Path="01_Hosting/01_Hosting.csproj" Id="93ae9100-02d7-4317-a6b8-20d26d6d3f78" />
   <Project Path="02_Logging/02_Logging.csproj" Id="82a242a9-a274-48bd-b8e5-c5e5a1a92418" />
+  <Project Path="architecture/architecture.csproj" Id="ce4cfd12-deb0-4b12-9d22-503bbe5fadc3" />
 </Solution>
